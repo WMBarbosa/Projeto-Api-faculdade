@@ -39,19 +39,16 @@ public class TarefaService {
         }
     }
 
-    public Tarefa update(Long id, Tarefa tarefa){
-        try{
-            Tarefa entity = tarefaRepository.getReferenceById(id);
-            updateData(id, tarefa);
-            return tarefaRepository.save(entity);
-        }catch (EntityNotFoundException e){
-            throw new ResourceNotFoundException(id);
-        }
+    public Tarefa update(Long id, Tarefa tarefa) {
+        Tarefa entity = tarefaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
+        updateData(entity, tarefa);
+        return tarefaRepository.save(entity);
     }
 
-    private void updateData(Long id, Tarefa tarefa){
-        tarefa.setNome(tarefa.getNome());
-        tarefa.setDataEntrega(tarefa.getDataEntrega());
-        tarefa.setResponsavel(tarefa.getResponsavel());
+    private void updateData(Tarefa entity, Tarefa tarefa) {
+        entity.setNome(tarefa.getNome());
+        entity.setDataEntrega(tarefa.getDataEntrega());
+        entity.setResponsavel(tarefa.getResponsavel());
     }
 }

@@ -39,8 +39,8 @@ public class TarefaController {
         return ResponseEntity.created(uri).body(tarefa);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Tarefa> delete(Long id){
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Tarefa> delete(@PathVariable Long id){
         tarefaService.delete(id);
         return ResponseEntity.noContent().build();
     }
